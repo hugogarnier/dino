@@ -1,0 +1,1 @@
+export {DinoScreen} from './DinoScreen';

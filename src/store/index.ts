@@ -1,0 +1,1 @@
+export {useDinoStore} from './store';
