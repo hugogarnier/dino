@@ -9,14 +9,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {
-  DinoScreen,
-  FavoritesScreen,
-  HomeScreen,
-  ProfileScreen,
-} from '../screens';
+import {DinoScreen, FavoritesScreen, HomeScreen} from '../screens';
 import {RootStackParamList, RootTabParamList} from '../types';
 import {colors} from '../theme';
+import {ROUTE} from '../constants';
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -29,11 +25,11 @@ const DinoStackNavigator = () => {
     <DinoStack.Navigator screenOptions={{headerShown: false}}>
       <DinoStack.Group>
         <DinoStack.Screen
-          name="homeDino"
+          name={ROUTE.HOME_DINO}
           component={HomeScreen}
         />
         <DinoStack.Screen
-          name="dinosaur"
+          name={ROUTE.DINOSAUR}
           component={DinoScreen}
         />
       </DinoStack.Group>
@@ -46,7 +42,7 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 const BottomTabNavigator = () => {
   return (
     <BottomTab.Navigator
-      initialRouteName="home"
+      initialRouteName={ROUTE.HOME}
       screenOptions={{
         headerTitle: 'DINO',
         headerTitleStyle: {
@@ -75,17 +71,17 @@ const BottomTabNavigator = () => {
         tabBarStyle: {backgroundColor: colors.background},
       }}>
       <BottomTab.Screen
-        name="home"
+        name={ROUTE.HOME}
         component={DinoStackNavigator}
       />
       <BottomTab.Screen
-        name="favorites"
+        name={ROUTE.FAVORITES}
         component={FavoritesScreen}
       />
-      <BottomTab.Screen
-        name="profile"
-        component={ProfileScreen}
-      />
+      {/*<BottomTab.Screen*/}
+      {/*  name="profile"*/}
+      {/*  component={ProfileScreen}*/}
+      {/*/>*/}
     </BottomTab.Navigator>
   );
 };
@@ -100,7 +96,7 @@ const RootNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Root"
+        name={ROUTE.ROOT}
         component={BottomTabNavigator}
         options={{headerShown: false}}
       />

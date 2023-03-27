@@ -10,4 +10,8 @@
     "@types/*": ["src/types/*"],
     "@theme/*": ["src/theme/*"],
   },
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+  }
 }

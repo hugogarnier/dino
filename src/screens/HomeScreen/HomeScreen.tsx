@@ -1,49 +1,41 @@
-import {Image, Text, View} from 'react-native';
+import dayjs from 'dayjs';
 
-import {Layout} from '../../ui';
-import {useDinoStore} from '../../store';
-import {FC, useEffect} from 'react';
-import {Dinosaur, RootStackScreenProps} from '../../types';
-import {ROUTE} from '../../constants';
+import {FC, useEffect, useState} from 'react';
+import {View} from 'react-native';
+
+import {useIsFocused} from '@react-navigation/native';
 import {FlashList} from '@shopify/flash-list';
 
-// RootStackScreenProps<ROUTE.HOME>
-type HomeScreenProps = RootStackScreenProps<ROUTE.HOME>;
-export const HomeScreen: FC<HomeScreenProps> = ({navigation}) => {
-  const isFocused = navigation.isFocused();
+import {DinosaurCard} from '../../components';
+import {APIS, ROUTE} from '../../constants';
+import {useDinoStore} from '../../store';
+import {Dinosaur, RootStackScreenProps} from '../../types';
+import {Layout, Text} from '../../ui';
+
+type HomeScreenProps = RootStackScreenProps<ROUTE.HOME_DINO>;
+export const HomeScreen: FC<HomeScreenProps> = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const isFocused = useIsFocused();
   const dinos = useDinoStore((state) => state.dinos);
+  const dinoUpdatedAt = useDinoStore((state) => state.dinoUpdatedAt);
   const fetch = useDinoStore((state) => state.fetch);
 
+  const isDinoDateExpired = dayjs(dinoUpdatedAt).isBefore(
+    dayjs().subtract(1, 'month'),
+  );
+
   useEffect(() => {
-    if (isFocused) {
-      console.log('fetching');
-      fetch('https://www.nhm.ac.uk/api/dino-directory-api/dinosaurs');
-      console.log('end of fetch');
-    }
-  }, [isFocused, fetch]);
+    (async () => {
+      if (isFocused && (isDinoDateExpired || !dinoUpdatedAt)) {
+        setLoading(true);
+        await fetch(APIS.DINOSAURS);
+        setLoading(false);
+      }
+    })();
+  }, [isFocused, fetch, isDinoDateExpired, dinoUpdatedAt]);
 
   const renderItem = ({item}: {item: Dinosaur}) => {
-    return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: 150,
-          height: 150,
-          backgroundColor: 'grey',
-          margin: 10,
-        }}>
-        <Image
-          source={{
-            uri: `https://www.nhm.ac.uk/resources/nature-online/life/dinosaurs/dinosaur-directory/images/reconstruction/small/${item.mediaCollection[0].identifier}.jpg`,
-          }}
-          style={{width: '100%', height: '100%'}}
-          resizeMode={'cover'}
-        />
-        <Text style={{fontFamily: 'IBMPlexMono-Regular'}}>{item.genus}</Text>
-      </View>
-    );
+    return <DinosaurCard dino={item} />;
   };
 
   return (
@@ -55,7 +47,8 @@ export const HomeScreen: FC<HomeScreenProps> = ({navigation}) => {
           data={dinos}
           keyExtractor={(item) => String(item.id)}
           estimatedItemSize={200}
-          numColumns={2}
+          refreshing={loading}
+          onRefresh={() => <Text>Refresh</Text>}
         />
       </View>
     </Layout>

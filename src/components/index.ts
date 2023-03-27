@@ -1,0 +1,1 @@
+export {DinosaurCard} from './DinosaurCard';

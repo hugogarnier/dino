@@ -3,6 +3,6 @@ export enum ROUTE {
   HOME_DINO = 'homeDino',
   DINOSAUR = 'dinosaur',
   FAVORITES = 'favorites',
-  PROFILE = 'PROFILE',
+  PROFILE = 'profile',
   ROOT = 'root',
 }

@@ -10,6 +10,7 @@ type Country = {
 
 type Media = {
   id: number;
+
   identifier: string;
   isDefault: boolean;
   title: string;
@@ -25,6 +26,7 @@ type Media = {
 export type Dinosaur = {
   id: number;
   genus: string;
+  uri: string;
   namePronounciation: string;
   nameHyphenated: string;
   nameMeaning: string;
