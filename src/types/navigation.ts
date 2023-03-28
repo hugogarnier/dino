@@ -10,6 +10,8 @@ import {
 } from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
+import {Dinosaur} from './dinosaur';
+
 declare global {
   namespace ReactNavigation {
     interface RootParamList extends RootStackParamList {}
@@ -20,8 +22,10 @@ export type RootStackParamList = {
   root: NavigatorScreenParams<RootTabParamList> | undefined;
   home: NavigatorScreenParams<RootTabParamList> | undefined;
   homeDino: NavigatorScreenParams<RootTabParamList> | undefined;
-  dinosaur: undefined;
+  dinosaur: {dino: Dinosaur};
   favorites: undefined;
+  homeFavorites: undefined;
+  dinosaurFav: {dino: Dinosaur};
   profile: undefined;
 };
 

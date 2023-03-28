@@ -12,6 +12,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {ROUTE} from '../constants';
 import {DinoScreen, FavoritesScreen, HomeScreen} from '../screens';
+import {DinoFavScreen} from '../screens/DinoFavScreen';
 import {colors} from '../theme';
 import {RootStackParamList, RootTabParamList} from '../types';
 
@@ -35,6 +36,25 @@ const DinoStackNavigator = () => {
         />
       </DinoStack.Group>
     </DinoStack.Navigator>
+  );
+};
+
+const DinoFavStack = createNativeStackNavigator<RootStackParamList>();
+
+const DinoFavStackNavigator = () => {
+  return (
+    <DinoFavStack.Navigator screenOptions={{headerShown: false}}>
+      <DinoFavStack.Group>
+        <DinoFavStack.Screen
+          name={ROUTE.HOME_FAVORITES}
+          component={FavoritesScreen}
+        />
+        <DinoFavStack.Screen
+          name={ROUTE.DINOSAUR_FAV}
+          component={DinoFavScreen}
+        />
+      </DinoFavStack.Group>
+    </DinoFavStack.Navigator>
   );
 };
 
@@ -78,7 +98,7 @@ const BottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name={ROUTE.FAVORITES}
-        component={FavoritesScreen}
+        component={DinoFavStackNavigator}
       />
       {/*<BottomTab.Screen*/}
       {/*  name="profile"*/}

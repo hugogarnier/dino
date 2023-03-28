@@ -1,20 +1,30 @@
 import {FC} from 'react';
-import {Image, Pressable, View} from 'react-native';
+import {Pressable, View} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
+import Animated from 'react-native-reanimated';
 
 import {ROUTE} from '../../constants';
 import {colors} from '../../theme';
 import {Dinosaur} from '../../types';
 import {Text} from '../../ui';
+import {sharedElementTransition} from '../../utils';
 
-type DinosaurCardProps = {dino: Dinosaur; index: number};
+type DinosaurCardProps = {dino: Dinosaur; index: number; from: string};
 
-export const DinosaurCard: FC<DinosaurCardProps> = ({dino, index}) => {
+export const DinosaurCard: FC<DinosaurCardProps> = ({dino, index, from}) => {
   const navigation = useNavigation();
 
+  const handleNavigation = () => {
+    if (from === 'fav') {
+      return navigation.navigate(ROUTE.DINOSAUR_FAV, {dino});
+    }
+    return navigation.navigate(ROUTE.DINOSAUR, {dino});
+  };
+
   return (
-    <View
+    <Pressable
+      onPress={handleNavigation}
       style={[
         {
           aspectRatio: 1,
@@ -36,37 +46,39 @@ export const DinosaurCard: FC<DinosaurCardProps> = ({dino, index}) => {
               marginLeft: 10,
             },
       ]}>
-      <Pressable onPress={() => navigation.navigate(ROUTE.DINOSAUR)}>
-        {({pressed}) => (
-          <View
+      {({pressed}) => (
+        <View
+          style={{
+            width: '100%',
+            height: '100%',
+            flex: 1,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginVertical: 10,
+          }}>
+          <Animated.Image
+            defaultSource={require('../../assets/images/dino-shape.png')}
+            source={{
+              uri: dino.uri,
+            }}
             style={{
-              flex: 1,
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginVertical: 10,
+              width: '100%',
+              height: 130,
+              transform: [{scale: pressed ? 0.9 : 1}],
+            }}
+            resizeMode={'contain'}
+            sharedTransitionTag={from === 'fav' ? 'dinoFavTag' : 'dinoTag'}
+            sharedTransitionStyle={sharedElementTransition}
+          />
+          <Text
+            style={{
+              fontSize: 14,
+              transform: [{scale: pressed ? 0.9 : 1}],
             }}>
-            <Image
-              defaultSource={require('../../assets/images/dino-shape.png')}
-              source={{
-                uri: dino.uri,
-              }}
-              style={{
-                width: '100%',
-                height: 130,
-                transform: [{scale: pressed ? 0.9 : 1}],
-              }}
-              resizeMode={'contain'}
-            />
-            <Text
-              style={{
-                fontSize: 14,
-                transform: [{scale: pressed ? 0.9 : 1}],
-              }}>
-              {dino.genus}
-            </Text>
-          </View>
-        )}
-      </Pressable>
-    </View>
+            {dino.genus}
+          </Text>
+        </View>
+      )}
+    </Pressable>
   );
 };

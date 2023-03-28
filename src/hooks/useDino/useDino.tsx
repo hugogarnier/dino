@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 
 import {APIS} from '../../constants';
 import {useDinoStore} from '../../store';
+import {useDinoFavStore} from '../../store/store';
 import {Dinosaur} from '../../types';
 
 export const useDino = () => {
@@ -30,4 +31,12 @@ export const useDino = () => {
   }, [fetch, isDinoDateExpired, setTmpDinos, dinoUpdatedAt, dinos]);
 
   return {loading, dinos, tmpDinos};
+};
+
+export const useDinoFav = () => {
+  const dinoFav = useDinoFavStore((state) => state.dinoFav);
+  const addFav = useDinoFavStore((state) => state.addFav);
+  const removeFav = useDinoFavStore((state) => state.removeFav);
+
+  return {dinoFav, addFav, removeFav};
 };

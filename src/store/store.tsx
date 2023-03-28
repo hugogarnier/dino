@@ -14,8 +14,7 @@ interface DinoState {
 }
 
 interface DinoFavState {
-  dinos: Dinosaur[];
-  dinoUpdatedAt: string;
+  dinoFav: Dinosaur[];
   addFav: (dinoToAdd: Dinosaur) => void;
   removeFav: (dinoToRemove: Dinosaur) => void;
 }
@@ -55,25 +54,23 @@ export const useDinoStore = create<DinoState>()(
 export const useDinoFavStore = create<DinoFavState>()(
   persist(
     (set) => ({
-      dinos: [],
-      dinoUpdatedAt: '',
+      dinoFav: [],
       addFav: (dinoToAdd) => {
         set((state) => ({
-          dinos: [...state.dinos, dinoToAdd],
+          dinoFav: [...state.dinoFav, dinoToAdd],
         }));
       },
       removeFav: (dinoToRemove) => {
         set((state) => ({
-          dinos: state.dinos.filter((dino) => dino.id !== dinoToRemove.id),
+          dinoFav: state.dinoFav.filter((dino) => dino.id !== dinoToRemove.id),
         }));
       },
     }),
     {
-      name: 'dino-storage',
+      name: 'dino-fav-storage',
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({
-        dinos: state.dinos,
-        dinoUpdatedAt: state.dinoUpdatedAt,
+        dinoFav: state.dinoFav,
       }),
     },
   ),

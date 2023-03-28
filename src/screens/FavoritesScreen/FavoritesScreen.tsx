@@ -1,5 +1,43 @@
-import {Text} from 'react-native';
+import {FC} from 'react';
+import {View} from 'react-native';
 
-export const FavoritesScreen = () => {
-  return <Text>FavoScreen</Text>;
+import {FlashList} from '@shopify/flash-list';
+
+import {DinosaurCard} from '../../components';
+import {ROUTE} from '../../constants';
+import {useDinoFav} from '../../hooks/useDino/useDino';
+import {Dinosaur, RootStackScreenProps} from '../../types';
+import {Layout, Text} from '../../ui';
+
+type FavoritesScreenProps = RootStackScreenProps<ROUTE.HOME_FAVORITES>;
+export const FavoritesScreen: FC<FavoritesScreenProps> = () => {
+  const {dinoFav} = useDinoFav();
+
+  const renderItem = ({item, index}: {item: Dinosaur; index: number}) => {
+    return (
+      <DinosaurCard
+        dino={item}
+        index={index}
+        from={'fav'}
+      />
+    );
+  };
+
+  return (
+    <Layout>
+      <View style={{flex: 1, marginTop: 20}}>
+        <Text>list of your favorite dinosaurs</Text>
+      </View>
+      <View style={{height: '100%', width: '100%'}}>
+        <FlashList
+          renderItem={renderItem}
+          data={dinoFav}
+          keyExtractor={(item) => String(item.id)}
+          estimatedItemSize={144}
+          numColumns={2}
+          ListEmptyComponent={() => <View style={{flex: 1}} />}
+        />
+      </View>
+    </Layout>
+  );
 };

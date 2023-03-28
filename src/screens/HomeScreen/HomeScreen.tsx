@@ -1,16 +1,14 @@
 import {FC, useEffect, useState} from 'react';
-import {Pressable, View} from 'react-native';
+import {View} from 'react-native';
 
 import {useIsFocused} from '@react-navigation/native';
 import {FlashList} from '@shopify/flash-list';
 
-import {DinosaurCard, Tune} from '../../components';
+import {DinosaurCard, Filter} from '../../components';
 import {ROUTE} from '../../constants';
-import {searchFilter} from '../../functions';
 import {useDino} from '../../hooks';
-import {colors} from '../../theme';
 import {Dinosaur, RootStackScreenProps} from '../../types';
-import {Layout, TextInput} from '../../ui';
+import {Layout} from '../../ui';
 
 type HomeScreenProps = RootStackScreenProps<ROUTE.HOME_DINO>;
 export const HomeScreen: FC<HomeScreenProps> = () => {
@@ -31,41 +29,19 @@ export const HomeScreen: FC<HomeScreenProps> = () => {
       <DinosaurCard
         dino={item}
         index={index}
+        from={'home'}
       />
     );
   };
 
   return (
     <Layout>
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          marginHorizontal: 21,
-          paddingVertical: 20,
-          marginTop: 80,
-        }}>
-        <TextInput
-          value={search}
-          onChangeText={(text) =>
-            searchFilter({
-              text,
-              data: dinos,
-              setFilteredData: setFilteredDinos,
-              setSearch,
-            })
-          }
-        />
-        <Pressable
-          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          {({pressed}) => (
-            <Tune color={pressed ? colors.secondaryText : colors.primaryText} />
-          )}
-        </Pressable>
-      </View>
+      <Filter
+        search={search}
+        setSearch={setSearch}
+        dinos={dinos}
+        setFilteredDinos={setFilteredDinos}
+      />
       <View style={{height: '100%', width: '100%'}}>
         <FlashList
           renderItem={renderItem}

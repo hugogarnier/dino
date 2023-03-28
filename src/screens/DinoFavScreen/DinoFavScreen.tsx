@@ -9,8 +9,8 @@ import {RootStackScreenProps} from '../../types';
 import {Layout} from '../../ui';
 import {sharedElementTransition} from '../../utils';
 
-type DinoScreenProps = RootStackScreenProps<ROUTE.DINOSAUR>;
-export const DinoScreen: FC<DinoScreenProps> = ({route}) => {
+type DinoFavScreenProps = RootStackScreenProps<ROUTE.DINOSAUR_FAV>;
+export const DinoFavScreen: FC<DinoFavScreenProps> = ({route}) => {
   const dino = route.params.dino;
   return (
     <Layout noPadding>
@@ -25,7 +25,7 @@ export const DinoScreen: FC<DinoScreenProps> = ({route}) => {
           backgroundColor: 'white',
         }}
         resizeMode={'contain'}
-        sharedTransitionTag="dinoTag"
+        sharedTransitionTag="dinoFavTag"
         sharedTransitionStyle={sharedElementTransition}
       />
 

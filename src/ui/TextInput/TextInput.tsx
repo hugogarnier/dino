@@ -12,7 +12,7 @@ export const TextInput: FC<TextInputProps> = ({
     <RNTextInput
       style={{
         paddingHorizontal: 20,
-        width: '80%',
+        width: '100%',
         height: 40,
         borderWidth: 0.3,
         borderColor: colors.primaryText,
@@ -23,6 +23,7 @@ export const TextInput: FC<TextInputProps> = ({
       value={value}
       underlineColorAndroid="transparent"
       placeholder="search a dinosaur"
+      autoCapitalize={'none'}
       {...props}
     />
   );
