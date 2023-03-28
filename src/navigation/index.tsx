@@ -4,15 +4,16 @@
  *
  */
 import React from 'react';
+import {Platform} from 'react-native';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {DinoScreen, FavoritesScreen, HomeScreen} from '../screens';
-import {RootStackParamList, RootTabParamList} from '../types';
-import {colors} from '../theme';
 import {ROUTE} from '../constants';
+import {DinoScreen, FavoritesScreen, HomeScreen} from '../screens';
+import {colors} from '../theme';
+import {RootStackParamList, RootTabParamList} from '../types';
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -67,6 +68,7 @@ const BottomTabNavigator = () => {
         tabBarLabelStyle: {
           fontSize: 14,
           fontFamily: 'IBMPlexMono-Regular',
+          marginBottom: Platform.OS === 'android' ? 15 : 10,
         },
         tabBarStyle: {backgroundColor: colors.background},
       }}>

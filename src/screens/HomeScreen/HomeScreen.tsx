@@ -1,54 +1,79 @@
-import dayjs from 'dayjs';
-
 import {FC, useEffect, useState} from 'react';
-import {View} from 'react-native';
+import {Pressable, View} from 'react-native';
 
 import {useIsFocused} from '@react-navigation/native';
 import {FlashList} from '@shopify/flash-list';
 
-import {DinosaurCard} from '../../components';
-import {APIS, ROUTE} from '../../constants';
-import {useDinoStore} from '../../store';
+import {DinosaurCard, Tune} from '../../components';
+import {ROUTE} from '../../constants';
+import {searchFilter} from '../../functions';
+import {useDino} from '../../hooks';
+import {colors} from '../../theme';
 import {Dinosaur, RootStackScreenProps} from '../../types';
-import {Layout, Text} from '../../ui';
+import {Layout, TextInput} from '../../ui';
 
 type HomeScreenProps = RootStackScreenProps<ROUTE.HOME_DINO>;
 export const HomeScreen: FC<HomeScreenProps> = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const isFocused = useIsFocused();
-  const dinos = useDinoStore((state) => state.dinos);
-  const dinoUpdatedAt = useDinoStore((state) => state.dinoUpdatedAt);
-  const fetch = useDinoStore((state) => state.fetch);
+  const [search, setSearch] = useState('');
+  const [filteredDinos, setFilteredDinos] = useState<Dinosaur[]>([]);
 
-  const isDinoDateExpired = dayjs(dinoUpdatedAt).isBefore(
-    dayjs().subtract(1, 'month'),
-  );
+  const {dinos, loading, tmpDinos} = useDino();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    (async () => {
-      if (isFocused && (isDinoDateExpired || !dinoUpdatedAt)) {
-        setLoading(true);
-        await fetch(APIS.DINOSAURS);
-        setLoading(false);
-      }
-    })();
-  }, [isFocused, fetch, isDinoDateExpired, dinoUpdatedAt]);
+    if (isFocused) {
+      setFilteredDinos(tmpDinos);
+    }
+  }, [isFocused, tmpDinos]);
 
-  const renderItem = ({item}: {item: Dinosaur}) => {
-    return <DinosaurCard dino={item} />;
+  const renderItem = ({item, index}: {item: Dinosaur; index: number}) => {
+    return (
+      <DinosaurCard
+        dino={item}
+        index={index}
+      />
+    );
   };
 
   return (
     <Layout>
-      <Text>HomeScreen</Text>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '100%',
+          marginHorizontal: 21,
+          paddingVertical: 20,
+          marginTop: 80,
+        }}>
+        <TextInput
+          value={search}
+          onChangeText={(text) =>
+            searchFilter({
+              text,
+              data: dinos,
+              setFilteredData: setFilteredDinos,
+              setSearch,
+            })
+          }
+        />
+        <Pressable
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          {({pressed}) => (
+            <Tune color={pressed ? colors.secondaryText : colors.primaryText} />
+          )}
+        </Pressable>
+      </View>
       <View style={{height: '100%', width: '100%'}}>
         <FlashList
           renderItem={renderItem}
-          data={dinos}
+          data={filteredDinos}
           keyExtractor={(item) => String(item.id)}
           estimatedItemSize={200}
           refreshing={loading}
-          onRefresh={() => <Text>Refresh</Text>}
+          numColumns={2}
         />
       </View>
     </Layout>

@@ -10,7 +10,7 @@ import {Dinosaur} from '../types';
 interface DinoState {
   dinos: Dinosaur[];
   dinoUpdatedAt: string;
-  fetch: (arg: string) => Promise<void>;
+  fetch: (arg: string) => Promise<Dinosaur[]>;
 }
 
 interface DinoFavState {
@@ -28,15 +28,17 @@ export const useDinoStore = create<DinoState>()(
       fetch: async (pond: string) => {
         const response = await fetch(pond);
         const tmpDinos = await response.json();
+        const newDinos = tmpDinos.map((dino: Dinosaur) => {
+          return {
+            ...dino,
+            uri: `${APIS.DINO_IMAGE}${dino.mediaCollection[0].identifier}.jpg`,
+          };
+        });
         set({
-          dinos: tmpDinos.map((dino: Dinosaur) => {
-            return {
-              ...dino,
-              uri: `${APIS.DINO_IMAGE}${dino.mediaCollection[0].identifier}.jpg`,
-            };
-          }),
+          dinos: newDinos,
           dinoUpdatedAt: dayjs().toISOString(),
         });
+        return newDinos;
       },
     }),
     {

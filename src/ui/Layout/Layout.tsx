@@ -1,5 +1,6 @@
 import {FC, ReactNode} from 'react';
 import {ScrollView} from 'react-native';
+
 import {colors} from '../../theme';
 
 type LayoutProps = {
@@ -11,7 +12,7 @@ export const Layout: FC<LayoutProps> = ({children}) => {
       style={{
         flex: 1,
         paddingHorizontal: 16,
-        paddingTop: 20,
+        paddingTop: 10,
         backgroundColor: colors.background,
       }}
       contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>

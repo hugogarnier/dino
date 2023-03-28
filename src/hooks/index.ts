@@ -1,0 +1,1 @@
+export {useDino} from './useDino';
