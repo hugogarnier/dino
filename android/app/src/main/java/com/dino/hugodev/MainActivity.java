@@ -1,4 +1,4 @@
-package com.dino;
+package com.dino.hugodev;
 import android.os.Bundle;
 
 import com.facebook.react.ReactActivity;

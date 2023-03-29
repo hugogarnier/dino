@@ -4,13 +4,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
 
-import {APIS} from '../constants';
 import {Dinosaur} from '../types';
 
 interface DinoState {
   dinos: Dinosaur[];
+  addDinos: (dinos: Dinosaur[]) => void;
   dinoUpdatedAt: string;
-  fetch: (arg: string) => Promise<Dinosaur[]>;
 }
 
 interface DinoFavState {
@@ -24,20 +23,11 @@ export const useDinoStore = create<DinoState>()(
     (set) => ({
       dinos: [],
       dinoUpdatedAt: '',
-      fetch: async (pond: string) => {
-        const response = await fetch(pond);
-        const tmpDinos = await response.json();
-        const newDinos = tmpDinos.map((dino: Dinosaur) => {
-          return {
-            ...dino,
-            uri: `${APIS.DINO_IMAGE}${dino.mediaCollection[0].identifier}.jpg`,
-          };
-        });
-        set({
-          dinos: newDinos,
+      addDinos: (dinos) => {
+        set(() => ({
+          dinos: dinos,
           dinoUpdatedAt: dayjs().toISOString(),
-        });
-        return newDinos;
+        }));
       },
     }),
     {

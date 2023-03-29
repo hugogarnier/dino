@@ -15,14 +15,28 @@ export const HomeScreen: FC<HomeScreenProps> = () => {
   const [search, setSearch] = useState('');
   const [filteredDinos, setFilteredDinos] = useState<Dinosaur[]>([]);
 
-  const {dinos, loading, tmpDinos} = useDino();
+  const {
+    dinos,
+    data,
+    refetch,
+    isLoading,
+    error,
+    dinoUpdatedAt,
+    isDinoDateExpired,
+  } = useDino();
   const isFocused = useIsFocused();
 
+  // useEffect(() => {
+  //   if (isFocused && (!dinoUpdatedAt || isDinoDateExpired)) {
+  //     refetch();
+  //     setFilteredDinos(data);
+  //   }
+  // }
   useEffect(() => {
     if (isFocused) {
-      setFilteredDinos(tmpDinos);
+      setFilteredDinos(data);
     }
-  }, [isFocused, tmpDinos]);
+  }, [isFocused, data]);
 
   const renderItem = ({item, index}: {item: Dinosaur; index: number}) => {
     return (
@@ -48,7 +62,7 @@ export const HomeScreen: FC<HomeScreenProps> = () => {
           data={filteredDinos}
           keyExtractor={(item) => String(item.id)}
           estimatedItemSize={200}
-          refreshing={loading}
+          refreshing={isLoading}
           numColumns={2}
         />
       </View>

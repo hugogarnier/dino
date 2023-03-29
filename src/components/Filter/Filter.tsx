@@ -1,9 +1,9 @@
 import {FC} from 'react';
 import {View} from 'react-native';
 
-import {searchFilter} from '../../functions';
 import {Dinosaur} from '../../types';
 import {TextInput} from '../../ui';
+import {searchFilter} from '../../utils/functions';
 
 type FilterProps = {
   search: string;

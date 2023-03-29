@@ -5,7 +5,7 @@ import {colors} from '../../theme';
 
 type LayoutProps = {
   noPadding?: boolean;
-  children: ReactNode;
+  children: ReactNode | ReactNode[];
 };
 export const Layout: FC<LayoutProps> = ({noPadding = false, children}) => {
   return (

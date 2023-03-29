@@ -1,14 +1,12 @@
 import {FC} from 'react';
-import {Pressable, View} from 'react-native';
+import {Image, Pressable, View} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
-import Animated from 'react-native-reanimated';
 
 import {ROUTE} from '../../constants';
 import {colors} from '../../theme';
 import {Dinosaur} from '../../types';
 import {Text} from '../../ui';
-import {sharedElementTransition} from '../../utils';
 
 type DinosaurCardProps = {dino: Dinosaur; index: number; from: string};
 
@@ -16,9 +14,10 @@ export const DinosaurCard: FC<DinosaurCardProps> = ({dino, index, from}) => {
   const navigation = useNavigation();
 
   const handleNavigation = () => {
-    if (from === 'fav') {
-      return navigation.navigate(ROUTE.DINOSAUR_FAV, {dino});
-    }
+    //TODO: change this when ready and use animated
+    // if (from === 'fav') {
+    //   return navigation.navigate(ROUTE.DINOSAUR_FAV, {dino});
+    // }
     return navigation.navigate(ROUTE.DINOSAUR, {dino});
   };
 
@@ -56,7 +55,7 @@ export const DinosaurCard: FC<DinosaurCardProps> = ({dino, index, from}) => {
             alignItems: 'center',
             marginVertical: 10,
           }}>
-          <Animated.Image
+          <Image
             defaultSource={require('../../assets/images/dino-shape.png')}
             source={{
               uri: dino.uri,
@@ -67,8 +66,6 @@ export const DinosaurCard: FC<DinosaurCardProps> = ({dino, index, from}) => {
               transform: [{scale: pressed ? 0.9 : 1}],
             }}
             resizeMode={'contain'}
-            sharedTransitionTag={from === 'fav' ? 'dinoFavTag' : 'dinoTag'}
-            sharedTransitionStyle={sharedElementTransition}
           />
           <Text
             style={{

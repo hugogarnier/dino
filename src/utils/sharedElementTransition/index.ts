@@ -1,1 +1,0 @@
-export {sharedElementTransition} from './sharedElementTransition';

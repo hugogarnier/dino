@@ -1,1 +1,1 @@
-export {sharedElementTransition} from './sharedElementTransition';
+export {searchFilter} from './functions/searchFilter';

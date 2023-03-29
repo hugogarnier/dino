@@ -1,4 +1,4 @@
-import {Dinosaur} from '../../types';
+import {Dinosaur} from '../../../types';
 
 export type SearchFilter = {
   text: string;

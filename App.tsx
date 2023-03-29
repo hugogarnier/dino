@@ -8,11 +8,14 @@
 import React, {useEffect} from 'react';
 import {StatusBar} from 'react-native';
 
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 
 import Navigation from './src/navigation';
 import {colors} from './src/theme';
+
+const queryClient = new QueryClient();
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -20,12 +23,12 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <SafeAreaProvider style={{backgroundColor: colors.background}}>
-      {/*<SafeAreaView style={{flex: 1, backgroundColor: colors.background}}>*/}
-      <StatusBar />
-      <Navigation />
-      {/*</SafeAreaView>*/}
-    </SafeAreaProvider>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider style={{backgroundColor: colors.background}}>
+        <StatusBar />
+        <Navigation />
+      </SafeAreaProvider>
+    </QueryClientProvider>
   );
 }
 
