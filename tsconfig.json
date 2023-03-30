@@ -8,10 +8,11 @@
     "@screens/*": ["src/screens/*"],
     "@navigation/*": ["src/navigation/*"],
     "@types/*": ["src/types/*"],
-    "@theme/*": ["src/theme/*"],
+    "@theme/*": ["src/theme/*"]
   },
   "compilerOptions": {
+    "jsx": "react",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
   }
 }

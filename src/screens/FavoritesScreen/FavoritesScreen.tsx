@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import {View} from 'react-native';
 
 import {FlashList} from '@shopify/flash-list';
@@ -28,16 +28,18 @@ export const FavoritesScreen: FC<FavoritesScreenProps> = () => {
       <View style={{flex: 1, marginTop: 20}}>
         <Text>list of your favorite dinosaurs</Text>
       </View>
-      <View style={{height: '100%', width: '100%'}}>
-        <FlashList
-          renderItem={renderItem}
-          data={dinoFav}
-          keyExtractor={(item) => String(item.id)}
-          estimatedItemSize={144}
-          numColumns={2}
-          ListEmptyComponent={() => <View style={{flex: 1}} />}
-        />
-      </View>
+      {(!dinoFav.length && <Text>There is no fav</Text>) || (
+        <View style={{height: '100%', width: '100%'}}>
+          <FlashList
+            renderItem={renderItem}
+            data={dinoFav}
+            keyExtractor={(item) => String(item.id)}
+            estimatedItemSize={144}
+            numColumns={2}
+            ListEmptyComponent={() => <View style={{flex: 1}} />}
+          />
+        </View>
+      )}
     </Layout>
   );
 };

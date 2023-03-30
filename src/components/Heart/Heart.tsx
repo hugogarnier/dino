@@ -1,19 +1,26 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 
 import Svg, {Path} from 'react-native-svg';
 
+import {computeHeightByRatio, computeWidthByRatio} from '../../utils';
+
 type HeartProps = {
   color: string;
+  height?: number;
+  width?: number;
 };
-export const Heart: FC<HeartProps> = ({color}) => {
+export const Heart: FC<HeartProps> = ({color, height = 0, width = 0}) => {
+  const dimensions = {width: 24, height: 24};
+  const cHeight =
+    height || computeHeightByRatio(dimensions.width, dimensions.height, width);
+  const cWidth =
+    width || computeWidthByRatio(dimensions.width, dimensions.height, height);
   return (
     <Svg
-      height="24px"
+      height={cHeight}
       viewBox="0 0 24 24"
-      width="24px"
-      fill={color}
-      // style={{position: 'absolute', top: 10, right: 20, zIndex: 9999}}
-    >
+      width={cWidth}
+      fill={color}>
       <Path
         d="M0 0h24v24H0z"
         fill="none"
