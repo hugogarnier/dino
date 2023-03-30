@@ -5,7 +5,7 @@ import {useEffect} from 'react';
 import {useQuery} from '@tanstack/react-query';
 
 import {APIS} from '../../constants';
-import {useDinoStore, useDinoFavStore} from '../../store';
+import {useDinoFavStore, useDinoStore} from '../../store';
 import {Dinosaur} from '../../types';
 
 export const useDino = () => {
@@ -29,6 +29,8 @@ export const useDino = () => {
       });
     },
     enabled: false,
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 
   const isDinoDateExpired = dayjs(dinoUpdatedAt).isBefore(

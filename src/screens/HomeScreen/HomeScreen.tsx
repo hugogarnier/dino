@@ -19,10 +19,10 @@ export const HomeScreen: FC<HomeScreenProps> = () => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (isFocused && status === 'success') {
+    if (isFocused && status === 'success' && !filteredDinos.length) {
       setFilteredDinos(data);
     }
-  }, [isFocused, data, status]);
+  }, [isFocused, data, status, filteredDinos]);
 
   const renderItem = ({item, index}: {item: Dinosaur; index: number}) => {
     return (
