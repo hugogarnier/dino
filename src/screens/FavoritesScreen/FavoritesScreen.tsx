@@ -5,7 +5,7 @@ import {FlashList} from '@shopify/flash-list';
 
 import {DinosaurCard} from '../../components';
 import {ROUTE} from '../../constants';
-import {useDinoFav} from '../../hooks/useDino/useDino';
+import {useDinoFav} from '../../hooks';
 import {Dinosaur, RootStackScreenProps} from '../../types';
 import {Layout, Text} from '../../ui';
 
@@ -34,8 +34,8 @@ export const FavoritesScreen: FC<FavoritesScreenProps> = () => {
             renderItem={renderItem}
             data={dinoFav}
             keyExtractor={(item) => String(item.id)}
-            estimatedItemSize={144}
-            ListEmptyComponent={() => <View style={{flex: 1}} />}
+            estimatedItemSize={199}
+            numColumns={2}
           />
         </View>
       )}

@@ -1,22 +1,13 @@
 import React, {FC} from 'react';
 import {View} from 'react-native';
 
-import {Dinosaur} from '../../types';
 import {TextInput} from '../../ui';
-import {searchFilter} from '../../utils/functions';
 
 type FilterProps = {
   search: string;
   setSearch: (text: string) => void;
-  dinos: Dinosaur[];
-  setFilteredDinos: (dinos: Dinosaur[]) => void;
 };
-export const Filter: FC<FilterProps> = ({
-  search,
-  setSearch,
-  dinos,
-  setFilteredDinos,
-}) => {
+export const Filter: FC<FilterProps> = ({search, setSearch}) => {
   return (
     <View
       style={{
@@ -31,14 +22,7 @@ export const Filter: FC<FilterProps> = ({
       }}>
       <TextInput
         value={search}
-        onChangeText={(text) =>
-          searchFilter({
-            text,
-            data: dinos,
-            setFilteredData: setFilteredDinos,
-            setSearch,
-          })
-        }
+        onChangeText={(text) => setSearch(text)}
       />
       {/*<Pressable*/}
       {/*  style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>*/}

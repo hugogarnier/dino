@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Pressable, View} from 'react-native';
+import {Image, Pressable, View} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
 
@@ -24,21 +24,50 @@ export const DinosaurCard: FC<DinosaurCardProps> = ({dino, index, from}) => {
   return (
     <Pressable
       onPress={handleNavigation}
-      style={{
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: colors.secondary,
-        borderColor: colors.primaryText,
-        borderWidth: 0.3,
-        marginVertical: 10,
-      }}>
+      style={[
+        {
+          aspectRatio: 1,
+          flexGrow: 1,
+          width: '50%',
+          position: 'relative',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: colors.secondary,
+          borderColor: colors.primaryText,
+          borderWidth: 0.3,
+          marginVertical: 10,
+        },
+        index % 2 === 0
+          ? {
+              marginRight: 10,
+            }
+          : {
+              marginLeft: 10,
+            },
+      ]}>
       {({pressed}) => (
         <View
           style={{
+            width: '100%',
+            height: '100%',
             flex: 1,
-            marginVertical: 15,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginVertical: 10,
           }}>
+          <Image
+            defaultSource={require('../../assets/images/dino-shape.png')}
+            source={{
+              uri: dino.uri,
+            }}
+            style={{
+              width: '100%',
+              height: 130,
+              transform: [{scale: pressed ? 0.9 : 1}],
+            }}
+            resizeMode={'contain'}
+            resizeMethod={'resize'}
+          />
           <Text
             style={{
               fontSize: 14,

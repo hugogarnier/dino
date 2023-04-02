@@ -1,1 +1,1 @@
-export {useDino} from './useDino';
+export {useDino, useDinoFav} from './useDino';

@@ -4,12 +4,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
 
+import {APIS} from '../constants';
 import {Dinosaur} from '../types';
 
 interface DinoState {
   dinos: Dinosaur[];
-  addDinos: (dinos: Dinosaur[]) => void;
+  filteredDinos: Dinosaur[];
+  search: string;
   dinoUpdatedAt: string;
+  addDinos: () => void;
+  filterDinos: (arg: string) => void;
+  resetSearch: () => void;
 }
 
 interface DinoFavState {
@@ -22,11 +27,36 @@ export const useDinoStore = create<DinoState>()(
   persist(
     (set) => ({
       dinos: [],
+      filteredDinos: [],
+      search: '',
       dinoUpdatedAt: '',
-      addDinos: (dinos) => {
+      addDinos: async () => {
+        const response = await fetch(APIS.DINOSAURS);
+        const responseJson = await response.json();
+        const tmpDinos = await responseJson.map((dino: Dinosaur) => {
+          return {
+            ...dino,
+            uri: `${APIS.DINO_IMAGE}${dino.mediaCollection[0].identifier}.jpg`,
+          };
+        });
         set(() => ({
-          dinos: dinos,
+          dinos: tmpDinos,
+          filteredDinos: tmpDinos,
           dinoUpdatedAt: dayjs().toISOString(),
+        }));
+      },
+      filterDinos: (searchText: string) => {
+        set(({dinos}) => ({
+          filteredDinos: dinos.filter((dino) =>
+            dino.genus.toLowerCase().includes(searchText.toLowerCase()),
+          ),
+          search: searchText,
+        }));
+      },
+      resetSearch: () => {
+        set(({dinos}) => ({
+          filteredDinos: dinos,
+          search: '',
         }));
       },
     }),
