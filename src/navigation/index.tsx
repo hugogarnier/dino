@@ -24,7 +24,11 @@ const DinoStack = createNativeStackNavigator<RootStackParamList>();
 
 const DinoStackNavigator = () => {
   return (
-    <DinoStack.Navigator screenOptions={{headerShown: false}}>
+    <DinoStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        contentStyle: {backgroundColor: colors.background},
+      }}>
       <DinoStack.Group>
         <DinoStack.Screen
           name={ROUTE.HOME_DINO}
@@ -43,7 +47,11 @@ const DinoFavStack = createNativeStackNavigator<RootStackParamList>();
 
 const DinoFavStackNavigator = () => {
   return (
-    <DinoFavStack.Navigator screenOptions={{headerShown: false}}>
+    <DinoFavStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        contentStyle: {backgroundColor: colors.background},
+      }}>
       <DinoFavStack.Group>
         <DinoFavStack.Screen
           name={ROUTE.HOME_FAVORITES}
@@ -71,16 +79,12 @@ const BottomTabNavigator = () => {
           fontWeight: '400',
         },
         headerTitleContainerStyle: {
-          width: '100%',
-          justifyContent: 'center',
           alignItems: 'center',
-          borderBottomWidth: 0.2,
-          borderBottomColor: colors.primaryText,
-          backgroundColor: colors.background,
         },
         headerStyle: {
           backgroundColor: colors.background,
         },
+        headerTitleAlign: 'center',
         headerShadowVisible: false,
         tabBarIcon: () => null,
         tabBarActiveTintColor: colors.primaryText,

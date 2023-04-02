@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import {TextInput as RNTextInput, TextInputProps} from 'react-native';
 
 import {colors} from '../../theme';
@@ -13,9 +13,9 @@ export const TextInput: FC<TextInputProps> = ({
       style={{
         paddingHorizontal: 20,
         width: '100%',
-        height: 40,
+        height: 50,
         borderWidth: 0.3,
-        borderColor: colors.primaryText,
+        borderColor: colors.primary,
         fontFamily: 'IBMPlexMono-Regular',
         fontSize: 14,
       }}

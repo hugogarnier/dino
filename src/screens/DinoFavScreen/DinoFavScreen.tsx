@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import {Image, View} from 'react-native';
 
 import {DinosaurGrid, DinosaurName} from '../../components';

@@ -5,8 +5,7 @@ import {useEffect} from 'react';
 import {useQuery} from '@tanstack/react-query';
 
 import {APIS} from '../../constants';
-import {useDinoStore} from '../../store';
-import {useDinoFavStore} from '../../store/store';
+import {useDinoFavStore, useDinoStore} from '../../store';
 import {Dinosaur} from '../../types';
 
 export const useDino = () => {
@@ -14,7 +13,7 @@ export const useDino = () => {
   const dinoUpdatedAt = useDinoStore((state) => state.dinoUpdatedAt);
   const addDinos = useDinoStore((state) => state.addDinos);
 
-  const {isLoading, error, data, isFetching, refetch} = useQuery({
+  const {status, data, refetch} = useQuery({
     queryKey: ['dinos'],
     queryFn: async () => {
       const response = await fetch(APIS.DINOSAURS);
@@ -22,7 +21,7 @@ export const useDino = () => {
         throw new Error('Network response was not ok');
       }
       const tmpDinos = await response.json();
-      return tmpDinos.map((dino: Dinosaur) => {
+      return await tmpDinos.map((dino: Dinosaur) => {
         return {
           ...dino,
           uri: `${APIS.DINO_IMAGE}${dino.mediaCollection[0].identifier}.jpg`,
@@ -30,6 +29,8 @@ export const useDino = () => {
       });
     },
     enabled: false,
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 
   const isDinoDateExpired = dayjs(dinoUpdatedAt).isBefore(
@@ -38,22 +39,17 @@ export const useDino = () => {
 
   useEffect(() => {
     (async () => {
-      if (isDinoDateExpired || !dinoUpdatedAt) {
-        refetch();
+      if (isDinoDateExpired || !dinoUpdatedAt || status !== 'loading') {
+        await refetch();
         addDinos(data);
       }
     })();
   }, [data, isDinoDateExpired, addDinos, dinoUpdatedAt, refetch]);
 
   return {
-    isLoading,
-    error,
+    status,
     data,
-    isFetching,
     dinos,
-    refetch,
-    isDinoDateExpired,
-    dinoUpdatedAt,
   };
 };
 

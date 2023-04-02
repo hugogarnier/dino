@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import {Pressable, View} from 'react-native';
 
 import {useDinoFav} from '../../hooks/useDino/useDino';
@@ -28,9 +28,13 @@ export const DinosaurName: FC<DinosaurNameProps> = ({dino}) => {
         alignItems: 'center',
         marginBottom: 30,
       }}>
-      <Text style={{fontSize: 24, marginRight: 10}}>{dino.genus}</Text>
-      <Pressable onPress={handleFav}>
+      <Text style={{fontSize: 32, marginRight: 10}}>{dino.genus}</Text>
+      <Pressable
+        onPress={handleFav}
+        accessibilityLabel="press favorite dinosaur"
+        accessibilityHint="if pressed you will add to favorite the dinosaur">
         <Heart
+          height={48}
           color={dinoFav.includes(dino) ? colors.primary : colors.secondary}
         />
       </Pressable>

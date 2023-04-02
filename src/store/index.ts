@@ -1,1 +1,1 @@
-export {useDinoStore} from './store';
+export {useDinoStore, useDinoFavStore} from './store';
