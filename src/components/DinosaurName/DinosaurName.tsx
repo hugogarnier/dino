@@ -28,7 +28,7 @@ export const DinosaurName: FC<DinosaurNameProps> = ({dino}) => {
         alignItems: 'center',
         marginBottom: 30,
       }}>
-      <Text style={{fontSize: 24, marginRight: 10}}>{dino.genus}</Text>
+      <Text style={{fontSize: 32, marginRight: 10}}>{dino.genus}</Text>
       <Pressable
         onPress={handleFav}
         accessibilityLabel="press favorite dinosaur"

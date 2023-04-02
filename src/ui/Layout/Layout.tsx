@@ -1,4 +1,4 @@
-import {FC, ReactNode} from 'react';
+import React, {FC, ReactNode} from 'react';
 import {ScrollView} from 'react-native';
 
 import {colors} from '../../theme';
@@ -12,7 +12,7 @@ export const Layout: FC<LayoutProps> = ({noPadding = false, children}) => {
     <ScrollView
       style={{
         flex: 1,
-        paddingHorizontal: noPadding ? 0 : 16,
+        marginHorizontal: noPadding ? 0 : 20,
         paddingTop: noPadding ? 0 : 10,
         backgroundColor: colors.background,
       }}

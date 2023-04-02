@@ -52,7 +52,6 @@ export const HomeScreen: FC<HomeScreenProps> = () => {
                 keyExtractor={(item) => String(item.id)}
                 estimatedItemSize={200}
                 refreshing={status === 'loading'}
-                numColumns={2}
               />
             </View>
           </>

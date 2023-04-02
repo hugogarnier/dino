@@ -35,7 +35,6 @@ export const FavoritesScreen: FC<FavoritesScreenProps> = () => {
             data={dinoFav}
             keyExtractor={(item) => String(item.id)}
             estimatedItemSize={144}
-            numColumns={2}
             ListEmptyComponent={() => <View style={{flex: 1}} />}
           />
         </View>
