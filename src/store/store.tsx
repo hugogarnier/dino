@@ -35,8 +35,14 @@ export const useDinoStore = create<DinoState>()(
         const responseJson = await response.json();
         const tmpDinos = await responseJson.map((dino: Dinosaur) => {
           return {
-            ...dino,
+            id: dino.id,
+            genus: dino.genus,
             uri: `${APIS.DINO_IMAGE}${dino.mediaCollection[0].identifier}.jpg`,
+            continent: dino.countries[0].continent?.continent || 'unknown',
+            country: dino.countries[0]?.country || 'unknown',
+            period: dino.period?.period || 'unknown',
+            species: dino.species || 'unknown',
+            bodyShape: dino.bodyShape?.bodyShape || 'unknown',
           };
         });
         set(() => ({

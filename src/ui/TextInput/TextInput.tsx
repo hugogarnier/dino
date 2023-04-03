@@ -18,6 +18,7 @@ export const TextInput: FC<TextInputProps> = ({
         borderColor: colors.primary,
         fontFamily: 'IBMPlexMono-Regular',
         fontSize: 14,
+        color: colors.primaryText,
       }}
       onChangeText={onChangeText}
       value={value}

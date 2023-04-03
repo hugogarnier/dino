@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import {colors} from '../../theme';

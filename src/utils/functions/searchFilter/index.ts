@@ -1,1 +1,0 @@
-export {searchFilter} from './searchFilter';

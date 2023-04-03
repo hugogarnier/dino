@@ -1,4 +1,3 @@
-export {searchFilter} from './functions/searchFilter';
 export {
   computeHeightByRatio,
   computeWidthByRatio,

@@ -1,1 +1,1 @@
-export {searchFilter} from './searchFilter';
+export {computeHeightByRatio, computeWidthByRatio} from './computeDimension';

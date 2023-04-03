@@ -66,7 +66,6 @@ export const DinosaurCard: FC<DinosaurCardProps> = ({dino, index, from}) => {
               transform: [{scale: pressed ? 0.9 : 1}],
             }}
             resizeMode={'contain'}
-            resizeMethod={'resize'}
           />
           <Text
             style={{
