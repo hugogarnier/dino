@@ -1,26 +1,26 @@
 import React, {FC} from 'react';
 import {View} from 'react-native';
 
-import {Dinosaur} from '../../types';
+import {Dino} from '../../types';
 import {DinosaurRow} from '../DinosaurRow';
 
 type DinosaurGridProps = {
-  dino: Dinosaur;
+  dino: Dino;
 };
 export const DinosaurGrid: FC<DinosaurGridProps> = ({dino}) => {
   return (
     <View style={{gap: 10}}>
       <DinosaurRow
         title="continent"
-        text={dino.countries[0].continent.continent}
+        text={dino.continent}
       />
       <DinosaurRow
         title="country"
-        text={dino.countries[0].country}
+        text={dino.country}
       />
       <DinosaurRow
         title="period"
-        text={dino.period.period}
+        text={dino.period}
       />
       <DinosaurRow
         title="species"
@@ -28,7 +28,7 @@ export const DinosaurGrid: FC<DinosaurGridProps> = ({dino}) => {
       />
       <DinosaurRow
         title="body shape"
-        text={dino.bodyShape.bodyShape}
+        text={dino.bodyShape}
       />
     </View>
   );

@@ -5,11 +5,11 @@ import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
 
 import {APIS} from '../constants';
-import {Dinosaur} from '../types';
+import {Dino, Dinosaur} from '../types';
 
 interface DinoState {
-  dinos: Dinosaur[];
-  filteredDinos: Dinosaur[];
+  dinos: Dino[];
+  filteredDinos: Dino[];
   search: string;
   dinoUpdatedAt: string;
   addDinos: () => void;
@@ -18,9 +18,9 @@ interface DinoState {
 }
 
 interface DinoFavState {
-  dinoFav: Dinosaur[];
-  addFav: (dinoToAdd: Dinosaur) => void;
-  removeFav: (dinoToRemove: Dinosaur) => void;
+  dinoFav: Dino[];
+  addFav: (dinoToAdd: Dino) => void;
+  removeFav: (dinoToRemove: Dino) => void;
 }
 
 export const useDinoStore = create<DinoState>()(
